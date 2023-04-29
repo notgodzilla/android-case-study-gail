@@ -1,32 +1,43 @@
 package com.target.targetcasestudy.ui
 
 import android.view.LayoutInflater
-import android.view.View
+
 import android.view.ViewGroup
-import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
-import com.target.targetcasestudy.R
-import com.target.targetcasestudy.data.StaticData
 
-class DealItemAdapter : RecyclerView.Adapter<DealItemViewHolder>() {
+import com.target.targetcasestudy.api.Deal
+import com.target.targetcasestudy.databinding.DealListItemBinding
+import com.target.targetcasestudy.model.Product
 
-  override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): DealItemViewHolder {
-    val inflater = LayoutInflater.from(parent.context)
-    val view = inflater.inflate(R.layout.deal_list_item, parent, false)
-    return DealItemViewHolder(view)
-  }
+class DealItemAdapter(private val deals: List<Product>) :
+    RecyclerView.Adapter<DealItemViewHolder>() {
 
-  override fun getItemCount(): Int {
-    return StaticData.deals.size
-  }
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): DealItemViewHolder {
+        val inflater = LayoutInflater.from(parent.context)
+        // Using viewBinding to bind fragment_deal_item to DealItemViewHolder
+        val binding = DealListItemBinding.inflate(inflater, parent, false)
+        return DealItemViewHolder(binding)
+    }
 
-  override fun onBindViewHolder(viewHolder: DealItemViewHolder, position: Int) {
-    val item = StaticData.deals[position]
-    viewHolder.itemView.findViewById<TextView>(R.id.deal_list_item_title).text = item.title
-    viewHolder.itemView.findViewById<TextView>(R.id.deal_list_item_price).text = item.price
-  }
+    override fun getItemCount(): Int = deals.size
+
+
+    override fun onBindViewHolder(viewHolder: DealItemViewHolder, position: Int) {
+        val item = deals[position]
+        viewHolder.bind(item)
+
+    }
 }
 
-class DealItemViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
+// Using viewBinding to bind fragment_deal_item to DealItemViewHolder
+class DealItemViewHolder(private val binding: DealListItemBinding) :
+    RecyclerView.ViewHolder(binding.root) {
+    fun bind(deal: Product) {
+        binding.dealListItemPrice.text = deal.regularPrice.displayString
+        binding.dealListItemTitle.text = deal.title
+
+    }
+
 
 }
+
