@@ -9,6 +9,7 @@ import androidx.fragment.app.viewModels
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
+import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.target.targetcasestudy.databinding.FragmentDealListBinding
@@ -46,11 +47,17 @@ class DealListFragment : Fragment() {
             viewLifecycleOwner.repeatOnLifecycle(Lifecycle.State.STARTED) {
                 dealListViewModel.dealItems.collect { products ->
                     binding.dealListRecyclerView.adapter =
-                        DealItemAdapter(products, requireContext())
+                        DealItemAdapter(products, requireContext()) { productId ->
+                            onProductClicked(productId)
+                        }
                 }
 
             }
         }
 
+    }
+
+    private fun onProductClicked(productId: Int) {
+        findNavController().navigate(DealListFragmentDirections.showDealItemDetails(productId))
     }
 }

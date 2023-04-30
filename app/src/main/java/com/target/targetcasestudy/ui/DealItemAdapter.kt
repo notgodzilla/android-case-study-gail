@@ -11,7 +11,11 @@ import com.target.targetcasestudy.R
 import com.target.targetcasestudy.databinding.DealListItemBinding
 import com.target.targetcasestudy.model.Product
 
-class DealItemAdapter(private val deals: List<Product>, private val context: Context) :
+class DealItemAdapter(
+    private val deals: List<Product>,
+    private val context: Context,
+    private val onProductClicked: (productId: Int) -> Unit
+) :
     RecyclerView.Adapter<DealItemViewHolder>() {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): DealItemViewHolder {
@@ -26,15 +30,22 @@ class DealItemAdapter(private val deals: List<Product>, private val context: Con
 
     override fun onBindViewHolder(viewHolder: DealItemViewHolder, position: Int) {
         val item = deals[position]
-        viewHolder.bind(item)
-
+        viewHolder.bind(item) {
+            onProductClicked(item.id)
+        }
     }
 }
 
 // Using viewBinding to bind fragment_deal_item to DealItemViewHolder
-class DealItemViewHolder(private val binding: DealListItemBinding, private val context: Context) :
+class DealItemViewHolder(
+    private val binding: DealListItemBinding,
+    private val context: Context
+) :
     RecyclerView.ViewHolder(binding.root) {
-    fun bind(product: Product) {
+    fun bind(product: Product, onProductClicked: (productId: Int) -> Unit) {
+
+        //Pass the product's id to DealListFragment
+        binding.root.setOnClickListener { onProductClicked(product.id) }
         binding.dealListRegularPrice.text = product.regularPrice.displayString
 
         binding.dealListSalePrice.text = context.getString(
