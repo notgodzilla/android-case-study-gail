@@ -10,6 +10,10 @@ import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
 import androidx.navigation.fragment.navArgs
+import com.bumptech.glide.Glide
+import com.bumptech.glide.load.resource.bitmap.RoundedCorners
+import com.bumptech.glide.request.RequestOptions
+import com.target.targetcasestudy.R
 import com.target.targetcasestudy.databinding.FragmentDealItemBinding
 import com.target.targetcasestudy.model.Deal
 import kotlinx.coroutines.launch
@@ -50,6 +54,21 @@ class DealItemFragment : Fragment() {
     }
 
     private fun showDealItemDetails(deal: Deal) {
-        binding.productDetailText.text = deal.description
+        deal.imageUrl.let {
+            Glide.with(requireContext()).load(it)
+                .apply(RequestOptions().transform(RoundedCorners(50)))
+                .placeholder(R.drawable.ic_launcher_foreground)
+                .into(binding.dealDetailProductPhoto)
+
+        }
+        binding.dealDetailItemTitle.text = deal.title
+        binding.dealDetailFulfillment.text = deal.fulfillment
+        binding.dealDetailProductDescription.text = deal.description
+        binding.dealDetailRegularPrice.text = deal.regularPrice.displayString
+        binding.dealDetailSalePrice.text =
+            deal.salePrice?.displayString ?: deal.regularPrice.displayString
+        binding.dealDetailProductDescription.text = deal.description
+
+
     }
 }
