@@ -1,7 +1,10 @@
 package com.target.targetcasestudy.api
 
+import com.target.targetcasestudy.model.Deal
 import retrofit2.http.GET
 import retrofit2.http.Path
+
+internal const val BASE_URL = "https://api.target.com/mobile_case_study_deals/v1/"
 
 interface DealApiKtx {
 

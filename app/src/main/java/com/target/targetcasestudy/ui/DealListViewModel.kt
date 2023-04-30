@@ -3,16 +3,27 @@ package com.target.targetcasestudy.ui
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.target.targetcasestudy.api.DealsRepository
+import com.target.targetcasestudy.model.Product
+import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.StateFlow
+import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.launch
 
 class DealListViewModel : ViewModel() {
 
     private val dealsRepository: DealsRepository = DealsRepository()
+    private val _dealItems: MutableStateFlow<List<Product>> =
+        MutableStateFlow(emptyList())
+    val dealItems: StateFlow<List<Product>>
+        get() = _dealItems.asStateFlow()
 
-    //TODO Call dealsRepository in viewModel
-    fun getDeals() {
+
+    init {
         viewModelScope.launch {
-            dealsRepository.getDeals()
+            val items = dealsRepository.getDeals()
+            _dealItems.value = items
         }
     }
+
+
 }

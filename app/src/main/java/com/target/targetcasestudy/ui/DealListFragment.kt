@@ -5,10 +5,12 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.viewModels
+import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
+import androidx.lifecycle.repeatOnLifecycle
 import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
-import com.target.targetcasestudy.api.DealsRepository
 import com.target.targetcasestudy.databinding.FragmentDealListBinding
 import kotlinx.coroutines.launch
 
@@ -19,9 +21,7 @@ class DealListFragment : Fragment() {
     private val binding
         get() = checkNotNull(_binding)
 
-    //TODO Temporarily creating instance of DealsRepository in Fragment to test networking
-    private val dealsRepository: DealsRepository = DealsRepository()
-
+    private val dealListViewModel: DealListViewModel by viewModels()
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -42,11 +42,14 @@ class DealListFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-
-        //TODO Temporarily calling getDeals() in here to test networking
         viewLifecycleOwner.lifecycleScope.launch {
-            val deals = dealsRepository.getDeals()
-            binding.dealListRecyclerView.adapter = DealItemAdapter(deals, requireContext())
+            viewLifecycleOwner.repeatOnLifecycle(Lifecycle.State.STARTED) {
+                dealListViewModel.dealItems.collect { products ->
+                    binding.dealListRecyclerView.adapter =
+                        DealItemAdapter(products, requireContext())
+                }
+
+            }
         }
 
     }
