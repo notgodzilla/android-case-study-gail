@@ -2,6 +2,7 @@ package com.target.targetcasestudy.ui
 
 import android.content.Context
 import android.view.LayoutInflater
+import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
@@ -46,12 +47,17 @@ class DealItemViewHolder(
 
         //Pass the product's id to DealListFragment
         binding.root.setOnClickListener { onProductClicked(product.id) }
-        binding.dealListRegularPrice.text = product.regularPrice.displayString
+        binding.dealListDisplayPrice.text = product.regularPrice.displayString
 
-        binding.dealListSalePrice.text = context.getString(
-            R.string.regular_price_text,
-            product.salePrice?.displayString ?: product.regularPrice.displayString
-        )
+        if (product.salePrice != null) {
+            binding.dealListDisplayPrice.text = product.salePrice.displayString
+            binding.dealListSalePrice.text =
+                context.getString(R.string.regular_price_text, product.regularPrice.displayString)
+        } else {
+            binding.dealListSalePrice.visibility = View.GONE
+        }
+
+
         binding.dealListItemDescription.text = product.title
         binding.dealListFulfillment.text = product.fulfillment
         binding.dealListAisleInfo.text = context.getString(

@@ -62,9 +62,18 @@ class DealItemFragment : Fragment() {
         binding.dealDetailItemTitle.text = product.title
         binding.dealDetailFulfillment.text = product.fulfillment
         binding.dealDetailProductDescription.text = product.description
-        binding.dealDetailRegularPrice.text = product.regularPrice.displayString
-        binding.dealDetailSalePrice.text =
-            product.salePrice?.displayString ?: product.regularPrice.displayString
+
+        binding.dealDetailDisplayPrice.text = product.regularPrice.displayString
+        if (product.salePrice != null) {
+            binding.dealDetailDisplayPrice.text = product.salePrice.displayString
+            binding.dealDetailSalePrice.text =
+                requireContext().getString(
+                    R.string.regular_price_text,
+                    product.regularPrice.displayString
+                )
+        } else {
+            binding.dealDetailSalePrice.visibility = View.GONE
+        }
         binding.dealDetailProductDescription.text = product.description
 
 

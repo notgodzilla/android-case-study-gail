@@ -1,11 +1,11 @@
 package com.target.targetcasestudy.ui
 
-import android.content.ContentValues.TAG
-import android.util.Log
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.target.targetcasestudy.api.DealsRepository
+import com.target.targetcasestudy.model.ItemNotFoundResponse
 import com.target.targetcasestudy.model.Product
+import com.target.targetcasestudy.model.getErrorResponse
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
@@ -22,15 +22,15 @@ class DealItemViewModel @Inject constructor(
     var deal: StateFlow<Product?> = _deal.asStateFlow()
 
     suspend fun getDealInfo(productId: String) {
-        try {
-            viewModelScope.launch {
+
+        viewModelScope.launch {
+            try {
                 _deal.value = dealsRepository.getDealInfo(productId)
+            } catch (ex: Exception) {
+                ex.getErrorResponse(404, ItemNotFoundResponse::class.java)?.let {
+                }
             }
-        } catch (ex: Exception) {
-            Log.e(TAG, "Failed to fetch deal product details", ex)
-
         }
-
     }
 
 
