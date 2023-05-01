@@ -6,7 +6,6 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
-import androidx.fragment.app.viewModels
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
@@ -15,11 +14,9 @@ import com.bumptech.glide.Glide
 import com.bumptech.glide.load.resource.bitmap.RoundedCorners
 import com.bumptech.glide.request.RequestOptions
 import com.target.targetcasestudy.R
-import com.target.targetcasestudy.api.DealsRepository
 import com.target.targetcasestudy.databinding.FragmentDealItemBinding
-import com.target.targetcasestudy.model.Deal
+import com.target.targetcasestudy.model.Product
 import kotlinx.coroutines.launch
-import javax.inject.Inject
 
 
 class DealItemFragment : Fragment() {
@@ -54,21 +51,21 @@ class DealItemFragment : Fragment() {
         }
     }
 
-    private fun showDealItemDetails(deal: Deal) {
-        deal.imageUrl.let {
+    private fun showDealItemDetails(product: Product) {
+        product.imageUrl.let {
             Glide.with(requireContext()).load(it)
                 .apply(RequestOptions().transform(RoundedCorners(50)))
                 .placeholder(R.drawable.ic_launcher_foreground)
                 .into(binding.dealDetailProductPhoto)
 
         }
-        binding.dealDetailItemTitle.text = deal.title
-        binding.dealDetailFulfillment.text = deal.fulfillment
-        binding.dealDetailProductDescription.text = deal.description
-        binding.dealDetailRegularPrice.text = deal.regularPrice.displayString
+        binding.dealDetailItemTitle.text = product.title
+        binding.dealDetailFulfillment.text = product.fulfillment
+        binding.dealDetailProductDescription.text = product.description
+        binding.dealDetailRegularPrice.text = product.regularPrice.displayString
         binding.dealDetailSalePrice.text =
-            deal.salePrice?.displayString ?: deal.regularPrice.displayString
-        binding.dealDetailProductDescription.text = deal.description
+            product.salePrice?.displayString ?: product.regularPrice.displayString
+        binding.dealDetailProductDescription.text = product.description
 
 
     }

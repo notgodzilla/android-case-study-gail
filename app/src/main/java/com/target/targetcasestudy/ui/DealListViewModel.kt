@@ -1,5 +1,7 @@
 package com.target.targetcasestudy.ui
 
+import android.content.ContentValues.TAG
+import android.util.Log
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.target.targetcasestudy.api.DealsRepository
@@ -24,8 +26,12 @@ class DealListViewModel @Inject constructor(
 
     init {
         viewModelScope.launch {
-            val items = dealsRepository.getDeals()
-            _dealItems.value = items
+            try {
+                val items = dealsRepository.getDeals()
+                _dealItems.value = items
+            } catch (ex: Exception) {
+                Log.e(TAG, "Failed to fetch deals", ex)
+            }
         }
     }
 
