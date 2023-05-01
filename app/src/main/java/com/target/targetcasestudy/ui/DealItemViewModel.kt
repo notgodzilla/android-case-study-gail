@@ -1,37 +1,30 @@
 package com.target.targetcasestudy.ui
 
 import androidx.lifecycle.ViewModel
-import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.viewModelScope
 import com.target.targetcasestudy.api.DealsRepository
 import com.target.targetcasestudy.model.Deal
+import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.launch
+import javax.inject.Inject
 
-class DealItemViewModel(productId: Int) : ViewModel() {
-
-    //TODO Implement dependency injection so we don't need to recreate repo
-    private val dealsRepository: DealsRepository = DealsRepository()
+@HiltViewModel
+class DealItemViewModel @Inject constructor(
+    private val dealsRepository: DealsRepository
+) : ViewModel() {
 
     private val _deal: MutableStateFlow<Deal?> = MutableStateFlow(null)
     var deal: StateFlow<Deal?> = _deal.asStateFlow()
 
-
-    init {
+    suspend fun getDealInfo(productId: String) {
         viewModelScope.launch {
-            _deal.value = dealsRepository.getDealInfo(productId.toString())
+            _deal.value = dealsRepository.getDealInfo(productId)
         }
+
     }
 
-    //Use factory pattern to create instance of DealItemViewModel with productId as argument
-    class DealItemViewModelFactory(
-        private val productId: Int
-    ) : ViewModelProvider.Factory {
-        override fun <T : ViewModel> create(modelClass: Class<T>): T {
-            return DealItemViewModel(productId) as T
-        }
-    }
 
 }

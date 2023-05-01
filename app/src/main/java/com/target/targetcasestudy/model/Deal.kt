@@ -14,6 +14,4 @@ data class Deal(
     @Json(name = "sale_price") val salePrice: SalePrice?,
     val fulfillment: String,
     val availability: String
-
-
 )

@@ -1,129 +1,135 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:orientation="vertical"
-    android:padding="10dp">
+    android:layout_height="match_parent">
 
-    <androidx.cardview.widget.CardView xmlns:card_view="http://schemas.android.com/apk/res-auto"
+
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_gravity="center"
-        android:padding="10dp"
-        card_view:cardCornerRadius="4dp">
+        android:orientation="vertical"
+        android:padding="10dp">
 
-        <LinearLayout
-            android:layout_width="wrap_content"
+        <androidx.cardview.widget.CardView xmlns:card_view="http://schemas.android.com/apk/res-auto"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
-            android:orientation="vertical">
-
-            <ImageView
-                android:id="@+id/deal_detail_product_photo"
-                android:layout_width="300dp"
-                android:layout_height="300dp"
-                android:layout_gravity="center"
-                android:padding="10dp"
-                tools:src="@drawable/ic_launcher_foreground" />
-
-            <TextView
-                android:id="@+id/deal_detail_item_title"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:padding="5dp"
-                android:textColor="@color/descriptionTextColor"
-                android:textSize="16sp"
-                tools:text="Class 1080p Full-Array LED HD Smart TV" />
+            android:padding="10dp"
+            card_view:cardCornerRadius="4dp">
 
             <LinearLayout
-
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content">
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:orientation="vertical">
+
+                <ImageView
+                    android:id="@+id/deal_detail_product_photo"
+                    android:layout_width="300dp"
+                    android:layout_height="300dp"
+                    android:layout_gravity="center"
+                    android:padding="10dp"
+                    tools:src="@drawable/ic_launcher_foreground" />
 
                 <TextView
-                    android:id="@+id/deal_detail_regular_price"
+                    android:id="@+id/deal_detail_item_title"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:padding="5dp"
-                    android:textColor="@color/colorPrimaryDark"
-                    android:textSize="20sp"
-                    android:textStyle="bold"
-                    tools:text="$34.99" />
+                    android:textColor="@color/descriptionTextColor"
+                    android:textSize="16sp"
+                    tools:text="Class 1080p Full-Array LED HD Smart TV" />
+
+                <LinearLayout
+
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content">
+
+                    <TextView
+                        android:id="@+id/deal_detail_regular_price"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:padding="5dp"
+                        android:textColor="@color/colorPrimaryDark"
+                        android:textSize="20sp"
+                        android:textStyle="bold"
+                        tools:text="$34.99" />
+
+                    <TextView
+                        android:id="@+id/deal_detail_sale_price"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:padding="5dp"
+                        android:textSize="12sp"
+                        tools:text="reg. $34.99" />
+
+
+                </LinearLayout>
 
                 <TextView
-                    android:id="@+id/deal_detail_sale_price"
+                    android:id="@+id/deal_detail_fulfillment"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:padding="5dp"
-                    android:textSize="12sp"
-                    tools:text="reg. $34.99" />
-
+                    tools:text="Online" />
 
             </LinearLayout>
 
-            <TextView
-                android:id="@+id/deal_detail_fulfillment"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                tools:text="Online" />
+        </androidx.cardview.widget.CardView>
 
-        </LinearLayout>
-
-    </androidx.cardview.widget.CardView>
-
-    <androidx.cardview.widget.CardView xmlns:card_view="http://schemas.android.com/apk/res-auto"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center"
-        android:layout_marginTop="20dp"
-        android:padding="10dp"
-        card_view:cardCornerRadius="4dp">
-
-        <LinearLayout
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-
-            android:orientation="vertical">
-
-            <TextView
-                android:id="@+id/deal_product_description_header"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:padding="5dp"
-                android:text="@string/product_details"
-                android:textColor="@color/descriptionTextColor"
-                android:textSize="16sp"
-                android:textStyle="bold" />
-
-            <TextView
-                android:id="@+id/deal_detail_product_description"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                tools:text="Versatility and performance collide with the new D-Series HD Smart TV. D-Series comes loaded with a full array backlight for better contrast and uniformity, brilliant 720p HD resolution and an ultra-fast IQ processor with support for immersive audio pass-through with Dolby Atmos and DTS:X." />
-        </LinearLayout>
-
-    </androidx.cardview.widget.CardView>
-
-
-    <androidx.cardview.widget.CardView xmlns:card_view="http://schemas.android.com/apk/res-auto"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center"
-        android:layout_marginTop="10dp"
-        android:padding="10dp"
-        card_view:cardCornerRadius="4dp">
-
-        <Button
-            android:id="@+id/deal_detail_add_to_cart"
+        <androidx.cardview.widget.CardView xmlns:card_view="http://schemas.android.com/apk/res-auto"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:background="@color/colorPrimary"
-            android:text="@string/add_to_cart"
-            android:textAllCaps="false"
-            android:textStyle="bold"
-            android:textColor="@color/white"
-            android:textSize="20sp" />
-    </androidx.cardview.widget.CardView>
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_marginTop="20dp"
+            android:padding="10dp"
+            card_view:cardCornerRadius="4dp">
 
-</LinearLayout>
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+
+                android:orientation="vertical">
+
+                <TextView
+                    android:id="@+id/deal_product_description_header"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:padding="5dp"
+                    android:text="@string/product_details"
+                    android:textColor="@color/descriptionTextColor"
+                    android:textSize="16sp"
+                    android:textStyle="bold" />
+
+                <TextView
+                    android:id="@+id/deal_detail_product_description"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    tools:text="Versatility and performance collide with the new D-Series HD Smart TV. D-Series comes loaded with a full array backlight for better contrast and uniformity, brilliant 720p HD resolution and an ultra-fast IQ processor with support for immersive audio pass-through with Dolby Atmos and DTS:X." />
+            </LinearLayout>
+
+        </androidx.cardview.widget.CardView>
+
+        <androidx.cardview.widget.CardView xmlns:card_view="http://schemas.android.com/apk/res-auto"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_marginTop="10dp"
+            android:padding="10dp"
+            card_view:cardCornerRadius="4dp">
+
+            <Button
+                android:id="@+id/deal_detail_add_to_cart"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:background="@color/colorPrimary"
+                android:text="@string/add_to_cart"
+                android:textAllCaps="false"
+                android:textColor="@color/white"
+                android:textSize="20sp"
+                android:textStyle="bold" />
+        </androidx.cardview.widget.CardView>
+
+    </LinearLayout>
+
+</ScrollView>

@@ -5,6 +5,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.activityViewModels
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
@@ -14,9 +15,11 @@ import com.bumptech.glide.Glide
 import com.bumptech.glide.load.resource.bitmap.RoundedCorners
 import com.bumptech.glide.request.RequestOptions
 import com.target.targetcasestudy.R
+import com.target.targetcasestudy.api.DealsRepository
 import com.target.targetcasestudy.databinding.FragmentDealItemBinding
 import com.target.targetcasestudy.model.Deal
 import kotlinx.coroutines.launch
+import javax.inject.Inject
 
 
 class DealItemFragment : Fragment() {
@@ -27,10 +30,7 @@ class DealItemFragment : Fragment() {
     private val binding
         get() = checkNotNull(_binding)
 
-    //Use args to create viewModel via factory pattern
-    private val dealItemViewModel: DealItemViewModel by viewModels {
-        DealItemViewModel.DealItemViewModelFactory(args.productId)
-    }
+    private val dealItemViewModel: DealItemViewModel by activityViewModels()
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -44,6 +44,7 @@ class DealItemFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
         viewLifecycleOwner.lifecycleScope.launch {
             viewLifecycleOwner.repeatOnLifecycle(Lifecycle.State.STARTED) {
+                dealItemViewModel.getDealInfo(args.productId.toString())
                 dealItemViewModel.deal.collect {
                     it?.let { showDealItemDetails(it) }
 
