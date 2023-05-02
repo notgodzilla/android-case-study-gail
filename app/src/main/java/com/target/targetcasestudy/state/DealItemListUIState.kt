@@ -4,5 +4,6 @@ import com.target.targetcasestudy.model.Product
 
 data class DealItemListUIState(
     val products: List<Product> = emptyList(),
-    val error: Boolean = false
+    val error: Boolean = false,
+    val loading: Boolean = true
 )

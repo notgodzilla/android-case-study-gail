@@ -51,6 +51,12 @@ class DealListFragment : Fragment() {
                 hideErrorState()
 
                 dealListViewModel.dealsListUIState.collect { productsState ->
+                    if (productsState.loading) {
+                        binding.dealListRecyclerView.visibility = View.GONE
+                        binding.dealsListProgressBar.visibility = View.VISIBLE
+                    } else {
+                        binding.dealsListProgressBar.visibility = View.GONE
+                    }
                     if (productsState.error) {
                         showErrorState()
                     } else {
@@ -65,9 +71,7 @@ class DealListFragment : Fragment() {
                 }
             }
         }
-
     }
-
 
     private fun hideErrorState() {
         binding.dealsListErrorIcon.visibility = View.GONE
@@ -79,7 +83,9 @@ class DealListFragment : Fragment() {
         binding.dealsListErrorIcon.visibility = View.VISIBLE
         binding.dealsListErrorText.visibility = View.VISIBLE
         binding.dealsListErrorRefreshButton.visibility = View.VISIBLE
-        binding.dealsListErrorRefreshButton.setOnClickListener { dealListViewModel.getDeals() }
+        binding.dealsListErrorRefreshButton.setOnClickListener {
+            dealListViewModel.getDeals()
+        }
     }
 
     //Navigates to DealItemFragment from given productId

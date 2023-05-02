@@ -4,6 +4,7 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.Lifecycle
@@ -55,6 +56,14 @@ class DealItemFragment : Fragment() {
         }
     }
 
+    //No real functionality other than adding the option to show an action when 'Add to cart' is clicked
+    private fun onAddToCartClicked(product: Product) {
+        Toast.makeText(
+            requireContext(),
+            requireContext().getString(R.string.added_to_cart, product.title),
+            Toast.LENGTH_SHORT
+        ).show()
+    }
 
     // Hides layout and shows message from ItemNotFoundResponse message
     private fun showErrorState(errorText: String) {
@@ -94,6 +103,8 @@ class DealItemFragment : Fragment() {
             binding.dealDetailSalePrice.visibility = View.GONE
         }
         binding.dealDetailProductDescription.text = product.description
+
+        binding.dealDetailAddToCart.setOnClickListener { onAddToCartClicked(product) }
 
 
     }

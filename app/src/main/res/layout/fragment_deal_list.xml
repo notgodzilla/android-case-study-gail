@@ -6,6 +6,17 @@
     android:layout_height="match_parent"
     android:padding="5dp">
 
+    <ProgressBar
+        android:id="@+id/deals_list_progress_bar"
+        style="@android:style/Widget.ProgressBar.Large"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:visibility="visible"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
     <ImageView
         android:id="@+id/deals_list_error_icon"
         android:layout_width="wrap_content"
