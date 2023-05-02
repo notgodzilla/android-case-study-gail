@@ -4,7 +4,6 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.Lifecycle
@@ -45,10 +44,9 @@ class DealItemFragment : Fragment() {
                 dealItemViewModel.getDealInfo(args.productId.toString())
                 dealItemViewModel.dealItemUIState.collect { state ->
                     if (state.error) {
-                        showItemNotFoundResponse(state.errorMessage ?: "")
+                        showErrorState(state.errorMessage ?: getString(R.string.generic_error))
                     } else {
                         state.product?.let { showDealItemDetails(it) }
-
                     }
                 }
             }
@@ -57,20 +55,20 @@ class DealItemFragment : Fragment() {
 
 
     // Hides layout and shows message from ItemNotFoundResponse message
-    private fun showItemNotFoundResponse(errorText: String) {
-        binding.dealDetailProductInfoCard.visibility = View.GONE
+    private fun showErrorState(errorText: String) {
+        //Hides product description and add to cart button
         binding.deailProductDetailDescriptionCard.visibility = View.GONE
         binding.detailDetailAddToCartCard.visibility = View.GONE
-        //TODO Display message on screen instead of Toast
-        Toast.makeText(
-            binding.root.context,
-            errorText,
-            Toast.LENGTH_LONG
-        ).show()
 
+        //Set product photo to show empty cart and set product title to error message
+        binding.dealDetailProductPhoto.setImageResource(R.drawable.ic_empty_cart)
+        binding.dealDetailItemTitle.text = errorText
     }
 
     private fun showDealItemDetails(product: Product) {
+        binding.deailProductDetailDescriptionCard.visibility = View.VISIBLE
+        binding.detailDetailAddToCartCard.visibility = View.VISIBLE
+
         product.imageUrl.let {
             Glide.with(requireContext()).load(it)
                 .apply(RequestOptions().transform(RoundedCorners(50)))
