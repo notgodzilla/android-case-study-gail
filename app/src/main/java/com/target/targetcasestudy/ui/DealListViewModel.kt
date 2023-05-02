@@ -47,7 +47,6 @@ class DealListViewModel @Inject constructor(
     }
 
     fun getDeals() {
-
         viewModelScope.launch(exceptionHandler) {
             try {
                 val items = dealsRepository.getDeals()
@@ -70,6 +69,4 @@ class DealListViewModel @Inject constructor(
             }
         }
     }
-
-
 }

@@ -103,9 +103,7 @@ class DealItemFragment : Fragment() {
             binding.dealDetailSalePrice.visibility = View.GONE
         }
         binding.dealDetailProductDescription.text = product.description
-
         binding.dealDetailAddToCart.setOnClickListener { onAddToCartClicked(product) }
-
 
     }
 }

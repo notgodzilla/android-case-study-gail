@@ -28,7 +28,6 @@ class DealItemAdapter(
 
     override fun getItemCount(): Int = deals.size
 
-
     override fun onBindViewHolder(viewHolder: DealItemViewHolder, position: Int) {
         val item = deals[position]
         viewHolder.bind(item) {
