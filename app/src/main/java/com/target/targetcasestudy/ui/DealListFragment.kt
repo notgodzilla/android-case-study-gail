@@ -46,7 +46,7 @@ class DealListFragment : Fragment() {
         viewLifecycleOwner.lifecycleScope.launch {
             viewLifecycleOwner.repeatOnLifecycle(Lifecycle.State.STARTED) {
 
-                //Handle fetching deals state
+                //Handle fetching / refreshing deals state
                 binding.dealListRecyclerView.visibility = View.GONE
                 hideErrorState()
 
@@ -54,6 +54,7 @@ class DealListFragment : Fragment() {
                     if (productsState.error) {
                         showErrorState()
                     } else {
+                        hideErrorState()
                         binding.dealListRecyclerView.visibility = View.VISIBLE
                         binding.dealListRecyclerView.adapter =
                             DealItemAdapter(productsState.products, requireContext()) { productId ->
@@ -71,11 +72,14 @@ class DealListFragment : Fragment() {
     private fun hideErrorState() {
         binding.dealsListErrorIcon.visibility = View.GONE
         binding.dealsListErrorText.visibility = View.GONE
+        binding.dealsListErrorRefreshButton.visibility = View.GONE
     }
 
     private fun showErrorState() {
         binding.dealsListErrorIcon.visibility = View.VISIBLE
         binding.dealsListErrorText.visibility = View.VISIBLE
+        binding.dealsListErrorRefreshButton.visibility = View.VISIBLE
+        binding.dealsListErrorRefreshButton.setOnClickListener { dealListViewModel.getDeals() }
     }
 
     //Navigates to DealItemFragment from given productId

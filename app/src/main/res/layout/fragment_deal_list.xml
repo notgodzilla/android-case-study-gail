@@ -26,11 +26,23 @@
         android:text="@string/generic_error"
         android:textSize="20sp"
         android:visibility="gone"
+        app:layout_constraintBottom_toTopOf="@id/deals_list_error_refresh_button"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/deals_list_error_icon"
         tools:visibility="visible" />
 
+    <Button
+        android:id="@+id/deals_list_error_refresh_button"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/refresh"
+        android:textAllCaps="false"
+        android:visibility="gone"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/deals_list_error_text"
+        tools:visibility="visible" />
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/deal_list_recycler_view"
