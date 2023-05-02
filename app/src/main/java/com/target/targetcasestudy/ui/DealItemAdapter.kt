@@ -57,7 +57,6 @@ class DealItemViewHolder(
             binding.dealListSalePrice.visibility = View.GONE
         }
 
-
         binding.dealListItemDescription.text = product.title
         binding.dealListFulfillment.text = product.fulfillment
         binding.dealListAisleInfo.text = context.getString(
@@ -69,12 +68,7 @@ class DealItemViewHolder(
             Glide.with(context).load(it).apply(RequestOptions().transform(RoundedCorners(50)))
                 .placeholder(R.drawable.ic_launcher_foreground)
                 .into(binding.dealListProductPhoto)
-
         }
-
-
     }
-
-
 }
 

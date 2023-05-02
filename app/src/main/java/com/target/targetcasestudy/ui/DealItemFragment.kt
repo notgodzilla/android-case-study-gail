@@ -9,6 +9,7 @@ import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
+import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import com.bumptech.glide.Glide
 import com.bumptech.glide.load.resource.bitmap.RoundedCorners
@@ -34,6 +35,7 @@ class DealItemFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View? {
         _binding = FragmentDealItemBinding.inflate(inflater, container, false)
+        binding.dealDetailsBackArrow.setOnClickListener { findNavController().popBackStack() }
         return binding.root
     }
 
