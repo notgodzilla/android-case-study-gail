@@ -4,7 +4,6 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.Lifecycle
@@ -13,7 +12,6 @@ import androidx.lifecycle.repeatOnLifecycle
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
-import com.target.targetcasestudy.R
 import com.target.targetcasestudy.databinding.FragmentDealListBinding
 import kotlinx.coroutines.launch
 
@@ -47,12 +45,16 @@ class DealListFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
         viewLifecycleOwner.lifecycleScope.launch {
             viewLifecycleOwner.repeatOnLifecycle(Lifecycle.State.STARTED) {
-                dealListViewModel.getDeals()
+
+                //Handle fetching deals state
+                binding.dealListRecyclerView.visibility = View.GONE
+                hideErrorState()
+
                 dealListViewModel.dealsListUIState.collect { productsState ->
                     if (productsState.error) {
-                        //Show generic error message
-                        showGenericError()
+                        showErrorState()
                     } else {
+                        binding.dealListRecyclerView.visibility = View.VISIBLE
                         binding.dealListRecyclerView.adapter =
                             DealItemAdapter(productsState.products, requireContext()) { productId ->
                                 //Product id from ViewHolder, passed into onProductClicked listener
@@ -65,12 +67,15 @@ class DealListFragment : Fragment() {
 
     }
 
-    private fun showGenericError() {
-        Toast.makeText(
-            requireContext(),
-            R.string.generic_error,
-            Toast.LENGTH_LONG
-        ).show()
+
+    private fun hideErrorState() {
+        binding.dealsListErrorIcon.visibility = View.GONE
+        binding.dealsListErrorText.visibility = View.GONE
+    }
+
+    private fun showErrorState() {
+        binding.dealsListErrorIcon.visibility = View.VISIBLE
+        binding.dealsListErrorText.visibility = View.VISIBLE
     }
 
     //Navigates to DealItemFragment from given productId

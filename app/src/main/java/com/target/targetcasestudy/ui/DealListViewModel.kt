@@ -30,33 +30,29 @@ class DealListViewModel @Inject constructor(
     private val exceptionHandler = CoroutineExceptionHandler { _, _ ->
         _uiState.update {
             it.copy(
-                products = emptyList(),
-                error = true
+                products = emptyList(), error = true
             )
         }
     }
 
-    suspend fun getDeals() {
+    init {
         viewModelScope.launch(exceptionHandler) {
             try {
                 val items = dealsRepository.getDeals()
                 _uiState.update {
                     it.copy(
-                        products = items,
-                        error = false
+                        products = items, error = false
                     )
                 }
             } catch (ex: Exception) {
                 _uiState.update {
                     it.copy(
-                        products = emptyList(),
-                        error = true
+                        products = emptyList(), error = true
                     )
                 }
                 Log.e(TAG, "Failed to fetch deals", ex)
             }
         }
-
     }
 
 

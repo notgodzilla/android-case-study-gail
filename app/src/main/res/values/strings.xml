@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">TargetCaseStudy</string>
+    <string name="app_name">List</string>
     <string name="regular_price_text">reg. %1$s</string>
     <string name="in_aisle_text">in aisle %1$s</string>
     <string name="product_details">Product Details</string>
