@@ -10,6 +10,7 @@ import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
+import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
@@ -24,15 +25,17 @@ class DealListViewModel @Inject constructor(
         get() = _dealItems.asStateFlow()
 
 
-    init {
+    suspend fun getDeals() {
         viewModelScope.launch {
             try {
                 val items = dealsRepository.getDeals()
-                _dealItems.value = items
+                _dealItems.update { items }
             } catch (ex: Exception) {
+                _dealItems.update { emptyList() }
                 Log.e(TAG, "Failed to fetch deals", ex)
             }
         }
+
     }
 
 

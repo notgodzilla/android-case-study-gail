@@ -4,15 +4,16 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
-import androidx.fragment.app.viewModels
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.target.targetcasestudy.R
 import com.target.targetcasestudy.databinding.FragmentDealListBinding
 import kotlinx.coroutines.launch
 
@@ -46,18 +47,34 @@ class DealListFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
         viewLifecycleOwner.lifecycleScope.launch {
             viewLifecycleOwner.repeatOnLifecycle(Lifecycle.State.STARTED) {
+                dealListViewModel.getDeals()
                 dealListViewModel.dealItems.collect { products ->
-                    binding.dealListRecyclerView.adapter =
-                        DealItemAdapter(products, requireContext()) { productId ->
-                            onProductClicked(productId)
-                        }
+                    if (products.isNotEmpty()) {
+                        binding.dealListRecyclerView.adapter =
+                                //Product id from ViewHolder, passed into onProductClicked listener
+                            DealItemAdapter(products, requireContext()) { productId ->
+                                onProductClicked(productId)
+                            }
+                    } else {
+                        //TODO Only show if error actually occurs, keep track of UI state
+                        //Show generic error message if product list is empty
+                        showGenericError()
+                    }
                 }
-
             }
         }
 
     }
 
+    private fun showGenericError() {
+        Toast.makeText(
+            requireContext(),
+            R.string.generic_error,
+            Toast.LENGTH_LONG
+        ).show()
+    }
+
+    //Navigates to DealItemFragment from given productId
     private fun onProductClicked(productId: Int) {
         findNavController().navigate(DealListFragmentDirections.showDealItemDetails(productId))
     }

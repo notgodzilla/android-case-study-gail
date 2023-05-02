@@ -4,6 +4,7 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.Lifecycle
@@ -42,13 +43,31 @@ class DealItemFragment : Fragment() {
         viewLifecycleOwner.lifecycleScope.launch {
             viewLifecycleOwner.repeatOnLifecycle(Lifecycle.State.STARTED) {
                 dealItemViewModel.getDealInfo(args.productId.toString())
-                dealItemViewModel.deal.collect {
-                    it?.let { showDealItemDetails(it) }
+                dealItemViewModel.dealItemUIState.collect { state ->
+                    if (state.error) {
+                        showItemNotFoundResponse(state.errorMessage ?: "")
+                    } else {
+                        state.product?.let { showDealItemDetails(it) }
 
+                    }
                 }
-
             }
         }
+    }
+
+
+    // Hides layout and shows message from ItemNotFoundResponse message
+    private fun showItemNotFoundResponse(errorText: String) {
+        binding.dealDetailProductInfoCard.visibility = View.GONE
+        binding.deailProductDetailDescriptionCard.visibility = View.GONE
+        binding.detailDetailAddToCartCard.visibility = View.GONE
+        //TODO Display message on screen instead of Toast
+        Toast.makeText(
+            binding.root.context,
+            errorText,
+            Toast.LENGTH_LONG
+        ).show()
+
     }
 
     private fun showDealItemDetails(product: Product) {
