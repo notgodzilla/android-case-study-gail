@@ -48,17 +48,16 @@ class DealListFragment : Fragment() {
         viewLifecycleOwner.lifecycleScope.launch {
             viewLifecycleOwner.repeatOnLifecycle(Lifecycle.State.STARTED) {
                 dealListViewModel.getDeals()
-                dealListViewModel.dealItems.collect { products ->
-                    if (products.isNotEmpty()) {
+                dealListViewModel.dealsListUIState.collect { productsState ->
+                    if (productsState.error) {
+                        //Show generic error message
+                        showGenericError()
+                    } else {
                         binding.dealListRecyclerView.adapter =
+                            DealItemAdapter(productsState.products, requireContext()) { productId ->
                                 //Product id from ViewHolder, passed into onProductClicked listener
-                            DealItemAdapter(products, requireContext()) { productId ->
                                 onProductClicked(productId)
                             }
-                    } else {
-                        //TODO Only show if error actually occurs, keep track of UI state
-                        //Show generic error message if product list is empty
-                        showGenericError()
                     }
                 }
             }

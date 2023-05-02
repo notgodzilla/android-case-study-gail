@@ -5,8 +5,9 @@ import android.util.Log
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.target.targetcasestudy.api.DealsRepository
-import com.target.targetcasestudy.model.Product
+import com.target.targetcasestudy.state.DealItemListUIState
 import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.CoroutineExceptionHandler
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
@@ -19,19 +20,39 @@ class DealListViewModel @Inject constructor(
     private val dealsRepository: DealsRepository
 ) : ViewModel() {
 
-    private val _dealItems: MutableStateFlow<List<Product>> =
-        MutableStateFlow(emptyList())
-    val dealItems: StateFlow<List<Product>>
-        get() = _dealItems.asStateFlow()
 
+    private var _uiState: MutableStateFlow<DealItemListUIState> =
+        MutableStateFlow(DealItemListUIState())
+    val dealsListUIState: StateFlow<DealItemListUIState>
+        get() = _uiState.asStateFlow()
+
+    //Exception handler to keep track of UI state
+    private val exceptionHandler = CoroutineExceptionHandler { _, _ ->
+        _uiState.update {
+            it.copy(
+                products = emptyList(),
+                error = true
+            )
+        }
+    }
 
     suspend fun getDeals() {
-        viewModelScope.launch {
+        viewModelScope.launch(exceptionHandler) {
             try {
                 val items = dealsRepository.getDeals()
-                _dealItems.update { items }
+                _uiState.update {
+                    it.copy(
+                        products = items,
+                        error = false
+                    )
+                }
             } catch (ex: Exception) {
-                _dealItems.update { emptyList() }
+                _uiState.update {
+                    it.copy(
+                        products = emptyList(),
+                        error = true
+                    )
+                }
                 Log.e(TAG, "Failed to fetch deals", ex)
             }
         }

@@ -1,4 +1,4 @@
-package com.target.targetcasestudy.ui
+package com.target.targetcasestudy.state
 
 import com.target.targetcasestudy.model.Product
 

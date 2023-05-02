@@ -5,6 +5,7 @@ import androidx.lifecycle.viewModelScope
 import com.target.targetcasestudy.api.DealsRepository
 import com.target.targetcasestudy.model.ItemNotFoundResponse
 import com.target.targetcasestudy.model.getErrorResponse
+import com.target.targetcasestudy.state.DealItemUIState
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.CoroutineExceptionHandler
 import kotlinx.coroutines.flow.MutableStateFlow
