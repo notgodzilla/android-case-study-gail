@@ -12,9 +12,9 @@
 
 ### Networking
 API Endpoints 
-- Base URL endpoint: https://api.target.com/mobile_case_study_deals/v1/
-- Grabbing deals list: /deals/
-- Grabbing deal item product detail: /deals/(productId) where (productId) is the corresponding product ID for that product
+- Base URL endpoint: `https://api.target.com/mobile_case_study_deals/v1/`
+- Grabbing deals list: `/deals/`
+- Grabbing deal item product detail: `/deals/(productId)` where `productId` is the corresponding product ID for that product
 
 
 ### Steps to run the app & functionality 
@@ -29,7 +29,7 @@ API Endpoints
 
 ### Known Bugs 
 - When navigating back from a deal item product page back to the deals list then selecting a different deal, the product page will briefly show the details of the last product selected before populating the view with the new product details
-- The product page only accounts for `ItemNotFondResponse` errors and when a network error occurs then the page will still display all the components such as product description, add to cart button, etc but not populated with data
+- The product page only accounts for `ItemNotFoundResponse` errors and when a network error occurs then the page will still display all the components such as product description, add to cart button, etc but not populated with data
 - If network connection is lost when navigating away from a deal item product page (navigating back to deal list) then navigating to a new product page, the old product will persist in the display
 - 
 ### Future Features 
